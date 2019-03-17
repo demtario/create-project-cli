@@ -1,0 +1,16 @@
+{
+  "name": "create-project-cli",
+  "version": "0.0.1",
+  "description": "A command-line tool for creating a new project from 'demtario/gulp-browsersync-php-template' boilerplate",
+  "main": "index.js",
+  "author": "Artur Mędrygał <medrygal.artur@gmail.com>",
+  "license": "MIT",
+  "bin": {
+    "create": "./index.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "node-cmd-promise": "^1.0.0",
+    "rimraf": "^2.6.3"
+  }
+}
