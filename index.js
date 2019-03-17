@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+'use strict';
+
 const fs = require('fs')
 const chalk = require('chalk')
 const cmd = require('node-cmd-promise')
