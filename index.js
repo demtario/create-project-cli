@@ -5,6 +5,7 @@ const fs = require('fs')
 const chalk = require('chalk')
 const cmd = require('node-cmd-promise')
 const rimraf = require('rimraf')
+const ora = require('ora')
 const co = require('co')
 const prompt = require('co-prompt')
 
@@ -26,13 +27,20 @@ co(function *() {
     console.log(chalk.red("Package name is required!"))
     process.exit(0)
   }
+  console.log(' ')
   console.log(chalk.yellow("Creating new project: ")+chalk.blue(details.name))
+  console.log(' ')
 
   init()
 })
 
 
 const init = async () => {
+  const spinner = ora({
+    text: 'Setting up boilerplate',
+    color: 'green'
+  }).start();
+
   await cmd('git clone https://github.com/demtario/gulp-browsersync-php-template.git '+details.name)
   rimraf.sync(`./${details.name}/.git`)
   await cmd(`git init ${details.name}`)
@@ -46,8 +54,12 @@ const init = async () => {
     json.description = details.description || ""
     json.license = details.license || "MIT"
 
-    fs.writeFile(`./${details.name}/package.json`, JSON.stringify(json, null, 2), (err) => {
+    fs.writeFile(`./${details.name}/package.json`, JSON.stringify(json, null, 2), async (err) => {
       if(err) throw err
+      
+      spinner.text = "Installing dependencies"
+      await cmd(`cd ${details.name} && npm i`)
+      spinner.stop()
 
       console.log(chalk.green('Project created successfully!'))
     })
