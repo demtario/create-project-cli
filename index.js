@@ -1,10 +1,12 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --harmony
 'use strict';
 
 const fs = require('fs')
 const chalk = require('chalk')
 const cmd = require('node-cmd-promise')
 const rimraf = require('rimraf')
+const co = require('co')
+const prompt = require('co-prompt')
 
 const details = {
   name: process.argv[2] || false,
@@ -13,12 +15,22 @@ const details = {
   license: "MIT"
 }
 
-if(!details.name){
-  console.log(chalk.red("Package name is required!"))
-  process.exit(0)
-}
+co(function *() {
+  if(!details.name) details.name = yield prompt(chalk.green('? ')+chalk.cyan('Package name: '))
+  details.author = yield prompt(chalk.green('? ')+chalk.cyan('Author: '))
+  details.description = yield prompt(chalk.green('? ')+chalk.cyan('Description: '))
+  details.license = yield prompt(chalk.green('? ')+chalk.cyan('License (MIT): '))
+  process.stdin.pause();
+  
+  if(!details.name){
+    console.log(chalk.red("Package name is required!"))
+    process.exit(0)
+  }
+  console.log(chalk.yellow("Creating new project: ")+chalk.blue(details.name))
 
-console.log(chalk.yellow("Creating new project: ")+chalk.blue(details.name))
+  init()
+})
+
 
 const init = async () => {
   await cmd('git clone https://github.com/demtario/gulp-browsersync-php-template.git '+details.name)
@@ -41,5 +53,3 @@ const init = async () => {
     })
   })
 }
-
-init()

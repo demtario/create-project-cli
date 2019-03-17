@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
     "node-cmd-promise": "^1.0.0",
     "rimraf": "^2.6.3"
   }
