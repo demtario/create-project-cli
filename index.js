@@ -13,7 +13,9 @@ const details = {
   name: process.argv[2] || false,
   author: "",
   description: "",
-  license: "MIT"
+  license: "MIT",
+  initialCommit: false,
+  installDependencies: false
 }
 
 co(function *() {
@@ -21,12 +23,21 @@ co(function *() {
   details.author = yield prompt(chalk.green('? ')+chalk.cyan('Author: '))
   details.description = yield prompt(chalk.green('? ')+chalk.cyan('Description: '))
   details.license = yield prompt(chalk.green('? ')+chalk.cyan('License (MIT): '))
+  details.installDependencies = yield prompt.confirm(chalk.green('? ')+chalk.cyan('Install dependencies? (Y/N) '))
+  details.initialCommit = yield prompt.confirm(chalk.green('? ')+chalk.cyan('Initial commit? (Y/N) '))
   process.stdin.pause();
   
   if(!details.name){
+    console.log(' ')
     console.log(chalk.red("Package name is required!"))
     process.exit(0)
   }
+  if(fs.existsSync(details.name)) {
+    console.log(' ')
+    console.log(chalk.red(`Folder with name [${details.name}] exists!`))
+    process.exit(0)
+  }
+
   console.log(' ')
   console.log(chalk.yellow("Creating new project: ")+chalk.blue(details.name))
   console.log(' ')
@@ -57,10 +68,17 @@ const init = async () => {
     fs.writeFile(`./${details.name}/package.json`, JSON.stringify(json, null, 2), async (err) => {
       if(err) throw err
       
-      spinner.text = "Installing dependencies"
-      await cmd(`cd ${details.name} && npm i`)
-      spinner.stop()
+      if(details.installDependencies) {
+        spinner.text = "Installing dependencies"
+        await cmd(`cd ${details.name} && npm i`)
+      }
+      
+      if(details.initialCommit) {
+        spinner.text = "Commiting changes"
+        await cmd(`cd ${details.name} && git add . && git commit -m ":tada: Initial commit"`)
+      }
 
+      spinner.stop()
       console.log(chalk.green('Project created successfully!'))
     })
   })
