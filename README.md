@@ -4,7 +4,7 @@ This is a command-line tool for creating a boilerplate from [demtario/gulp-brows
 ## Instalation
 Just install package below
 ```shell
-npm i @demtario/create-project-cli
+npm i -g @demtario/create-project-cli
 ```
 
 ## Usage

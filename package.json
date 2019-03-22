@@ -1,6 +1,6 @@
 {
   "name": "@demtario/create-project-cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A command-line tool for creating a new project from 'demtario/gulp-browsersync-php-template' boilerplate",
   "main": "index.js",
   "author": "Artur Mędrygał <medrygal.artur@gmail.com> (amedrygal.pl)",
