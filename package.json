@@ -1,10 +1,14 @@
 {
-  "name": "create-project-cli",
-  "version": "0.0.1",
+  "name": "@demtario/create-project-cli",
+  "version": "0.2.0",
   "description": "A command-line tool for creating a new project from 'demtario/gulp-browsersync-php-template' boilerplate",
   "main": "index.js",
-  "author": "Artur Mędrygał <medrygal.artur@gmail.com>",
+  "author": "Artur Mędrygał <medrygal.artur@gmail.com> (amedrygal.pl)",
   "license": "MIT",
+  "repository": {
+		"type": "git",
+		"url": "git+https://github.com/demtario/create-project-cli.git"
+	},
   "bin": {
     "create": "./index.js"
   },
