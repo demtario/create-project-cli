@@ -10,7 +10,8 @@
 		"url": "git+https://github.com/demtario/create-project-cli.git"
 	},
   "bin": {
-    "create": "./index.js"
+    "create": "./index.js",
+    "create-project-cli": "./index.js"
   },
   "dependencies": {
     "chalk": "^2.4.2",
